@@ -1,135 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Times+New+Roman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: #2c2c2c; /* Dark background behind paper */
+    background-color: #f5f5f5;
     height: 100vh;
     overflow: hidden;
     font-family: 'Times New Roman', serif;
 }
 
-/* === DECOY: REALISTIC PAPER === */
+/* === DECOY: JOURNAL STYLE === */
 #decoy-view {
     height: 100%;
     overflow-y: scroll;
-    padding: 20px 10px;
-    background: #333;
+    background: #e0e0e0;
+    padding: 10px;
 }
 
-.paper-sheet {
+.paper-container {
     background: #fff;
     max-width: 800px;
     margin: 0 auto;
     padding: 40px 30px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    min-height: 100vh;
-    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     color: #000;
 }
 
-/* Typography for Project */
-.school-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-.school-header h2 { font-size: 16px; letter-spacing: 1px; }
-.school-header p { font-size: 12px; }
+/* Header */
+.journal-header { border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+.journal-name { font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.journal-date { font-size: 12px; }
 
-.project-title-box { text-align: center; margin: 50px 0; border: 1px solid #000; padding: 30px; }
-.project-title-box h1 { font-size: 24px; font-weight: bold; }
-.project-title-box h2 { font-size: 18px; margin-top: 10px; }
+.paper-title h1 { font-size: 18px; text-align: center; margin-bottom: 15px; line-height: 1.3; }
 
-.submission-details { text-align: right; margin-top: 100px; font-size: 14px; line-height: 1.6; }
+.authors { text-align: center; font-size: 11px; margin-bottom: 30px; }
+.affiliation { font-style: italic; color: #444; margin-top: 5px; }
+.received-date { font-size: 10px; color: #666; margin-top: 5px; }
 
-h3 { text-align: center; text-decoration: underline; margin: 20px 0; font-size: 16px; }
-p { font-size: 12pt; line-height: 1.5; margin-bottom: 15px; text-align: justify; }
+/* Abstract */
+.abstract-section { 
+    margin: 0 40px 30px 40px; 
+    font-size: 11px; 
+    text-align: justify; 
+    line-height: 1.4;
+}
 
-.page-break { margin: 40px 0; border: none; border-bottom: 1px dashed #ccc; }
-.signature-box { display: flex; justify-content: space-between; margin-top: 80px; font-weight: bold; padding: 0 20px; }
+/* Content Columns */
+.columns { display: flex; flex-wrap: wrap; gap: 20px; }
+.col { flex: 1; min-width: 300px; }
 
-.text-formula { text-align: center; font-style: italic; font-weight: bold; padding: 10px; background: #f0f0f0; margin: 10px 0; }
+h3 { 
+    font-size: 10px; 
+    font-weight: bold; 
+    text-align: center; 
+    margin: 20px 0 10px 0; 
+    letter-spacing: 1px; 
+}
 
-/* CSS Diagram (Unbreakable) */
-.css-diagram { height: 150px; background: #eef; position: relative; border: 1px solid #000; margin: 20px 0; overflow: hidden; }
-.wing-shape { width: 200px; height: 100px; background: #fff; border: 2px solid #000; border-radius: 50% 50% 10% 10%; position: absolute; top: 30px; left: 50%; transform: translateX(-50%) rotate(-5deg); }
-.arrow { position: absolute; height: 2px; background: red; width: 100px; }
-.a1 { top: 20px; left: 20px; }
-.a2 { top: 120px; left: 20px; }
-.label { position: absolute; bottom: 5px; width: 100%; text-align: center; font-size: 10px; font-weight: bold; }
+p { 
+    font-size: 10.5px; /* SMALL FONT AS REQUESTED */
+    line-height: 1.5; 
+    text-align: justify; 
+    margin-bottom: 10px; 
+}
 
-/* Trigger */
-.bibliography-section { margin-top: 50px; font-size: 12px; }
-#secret-trigger { transition: background 0.3s; user-select: none; }
-#secret-trigger:active { background: #ffffcc; }
+.equation { text-align: center; margin: 15px 0; font-size: 12px; }
 
-/* === CHAT UI (Instagram Style) === */
+/* Diagram */
+.css-figure { border: 1px solid #ccc; padding: 10px; margin: 15px 0; }
+.fig-box { height: 100px; background: #f9f9f9; position: relative; border: 1px solid #eee; overflow: hidden; }
+.curve { position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: #ddd; border-top-left-radius: 100%; }
+.vector { position: absolute; height: 1px; background: black; transform-origin: left; }
+.v1 { width: 30px; top: 20px; left: 10px; transform: rotate(5deg); }
+.v2 { width: 40px; top: 40px; left: 10px; transform: rotate(0deg); }
+.v3 { width: 20px; top: 30px; left: 60px; transform: rotate(-10deg); }
+.caption { font-size: 9px; margin-top: 5px; text-align: center; font-style: italic; color: #555; }
+
+/* Footer & Trigger */
+.footer-line { margin-top: 40px; border: none; border-top: 1px solid #000; }
+.footer-ref { font-size: 9px; color: #444; margin-top: 5px; display: flex; justify-content: space-between; }
+
+/* THE SECRET TRIGGER STYLE */
+.doi-link { 
+    cursor: text; 
+    color: #444; 
+    font-family: 'Times New Roman', serif;
+    transition: color 0.2s;
+}
+.doi-link:active { color: #000; background-color: #eef; }
+
+
+/* === CHAT UI (Modern Dark) === */
 .hidden { display: none !important; }
 
 #chat-view {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: #000;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     z-index: 9999;
 }
 
-.chat-container {
-    display: flex; flex-direction: column; height: 100%; background: #121212;
-}
+.chat-container { display: flex; flex-direction: column; height: 100%; background: #000; }
 
 .chat-header {
-    padding: 15px;
-    background: #1f1f1f;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid #333;
-    color: white;
+    padding: 15px; background: #161616; border-bottom: 1px solid #333;
+    display: flex; justify-content: space-between; align-items: center; color: white;
 }
-
 .header-left { display: flex; align-items: center; gap: 10px; }
-.avatar-circle { width: 40px; height: 40px; background: linear-gradient(45deg, #833ab4, #fd1d1d); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; color: white; }
-.header-info h3 { font-size: 16px; margin: 0; }
-.status-text { font-size: 12px; color: #888; }
-#close-chat { background: none; border: none; color: white; font-size: 20px; }
+.avatar-circle { width: 35px; height: 35px; background: #333; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #0a84ff; }
+.header-info h3 { font-size: 15px; margin: 0; font-weight: 600; }
+.status-text { font-size: 11px; color: #666; }
+#close-chat { background: none; border: none; color: #888; font-size: 18px; }
 
-/* Messages */
-#messages-list {
-    flex: 1; overflow-y: scroll; padding: 20px; display: flex; flex-direction: column; gap: 8px;
-    background: #000;
-}
+#messages-list { flex: 1; overflow-y: scroll; padding: 15px; display: flex; flex-direction: column; gap: 4px; }
+.date-divider { text-align: center; margin: 15px 0; }
+.date-divider span { color: #555; font-size: 10px; font-weight: 600; text-transform: uppercase; }
 
-.date-divider { text-align: center; margin: 10px 0; }
-.date-divider span { background: #333; color: #aaa; padding: 5px 10px; border-radius: 10px; font-size: 11px; }
+.message { max-width: 75%; padding: 8px 12px; border-radius: 18px; font-size: 14px; color: white; position: relative; display: flex; flex-direction: column; }
+.sent { align-self: flex-end; background: #0a84ff; border-bottom-right-radius: 4px; }
+.received { align-self: flex-start; background: #262626; border-bottom-left-radius: 4px; }
 
-.message {
-    max-width: 70%; padding: 10px 15px; border-radius: 20px; font-size: 14px; position: relative; color: white;
-    display: flex; flex-direction: column;
-}
+.msg-text { line-height: 1.4; }
+.msg-meta { font-size: 9px; align-self: flex-end; opacity: 0.7; margin-top: 2px; display: flex; gap: 3px; align-items: center; }
 
-.sent { align-self: flex-end; background: #3797f0; border-bottom-right-radius: 5px; }
-.received { align-self: flex-start; background: #262626; border-bottom-left-radius: 5px; }
+/* Input */
+.input-area { padding: 10px; background: #161616; display: flex; align-items: center; gap: 10px; border-top: 1px solid #333; }
+.input-area input { flex: 1; background: #2c2c2e; border: none; padding: 10px 15px; border-radius: 20px; color: white; outline: none; font-size: 14px; }
+.input-area button { background: none; border: none; color: #0a84ff; font-size: 20px; padding: 5px; }
 
-.msg-text { margin-bottom: 5px; line-height: 1.4; }
-.msg-meta { font-size: 10px; align-self: flex-end; opacity: 0.7; display: flex; gap: 4px; align-items: center; }
+/* Overlay */
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 100; }
+.login-box { background: #1c1c1e; padding: 30px; border-radius: 12px; text-align: center; width: 80%; max-width: 280px; color: white; }
+.lock-icon { font-size: 30px; color: #0a84ff; margin-bottom: 15px; }
+.login-box input { width: 100%; padding: 12px; background: #2c2c2e; border: none; border-radius: 8px; color: white; margin: 15px 0; text-align: center; }
+.login-box button { width: 100%; padding: 10px; background: #0a84ff; border: none; border-radius: 8px; color: white; font-weight: 600; }
 
-/* Login Overlay */
-.overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-    display: flex; justify-content: center; align-items: center; z-index: 100;
-}
-.login-box { background: #1f1f1f; padding: 30px; border-radius: 15px; text-align: center; width: 80%; max-width: 300px; color: white; }
-.lock-icon { font-size: 40px; margin-bottom: 20px; color: #3797f0; }
-.login-box input { width: 100%; padding: 12px; background: #333; border: none; border-radius: 8px; color: white; margin: 15px 0; text-align: center; }
-.login-box button { width: 100%; padding: 12px; background: #3797f0; border: none; border-radius: 8px; color: white; font-weight: bold; }
-
-/* Input Area */
-.input-area {
-    padding: 10px; background: #1f1f1f; display: flex; align-items: center; gap: 10px;
-}
-.input-area input {
-    flex: 1; background: #333; border: none; padding: 12px 20px; border-radius: 25px; color: white; outline: none;
-}
-.input-area button { background: none; border: none; color: #3797f0; font-size: 20px; padding: 5px; }
-
-/* Sticker Panel */
-#sticker-panel {
-    height: 60px; background: #222; display: flex; overflow-x: scroll; align-items: center; padding: 0 10px; gap: 15px;
-}
-.sticker { font-size: 24px; cursor: pointer; transition: transform 0.1s; }
-.sticker:active { transform: scale(1.2); }
+/* Stickers */
+#sticker-panel { height: 50px; background: #222; display: flex; align-items: center; padding: 0 10px; gap: 15px; overflow-x: scroll; }
+.sticker { font-size: 22px; cursor: pointer; }
