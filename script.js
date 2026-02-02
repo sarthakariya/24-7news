@@ -1,112 +1,121 @@
-// === CONFIGURATION ===
-const LONG_PRESS_DURATION = 2000; // 2000ms = 2 seconds
+// === 1. FIREBASE CONFIGURATION (Your Specific Keys) ===
+const firebaseConfig = {
+  apiKey: "AIzaSyB0k8fWBMP6_bQB-vsUB7qtzKDlV2T_krs",
+  authDomain: "news-589b8.firebaseapp.com",
+  databaseURL: "https://news-589b8-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "news-589b8",
+  storageBucket: "news-589b8.firebasestorage.app",
+  messagingSenderId: "246626296129",
+  appId: "1:246626296129:web:69f5897d29a9bbfc27c1c0",
+  measurementId: "G-0MFZ1FGZPR"
+};
 
-// === DOM ELEMENTS ===
-const decoyView = document.getElementById('decoy-view');
-const chatView = document.getElementById('chat-view');
-const secretTrigger = document.getElementById('secret-trigger');
-const closeChatBtn = document.getElementById('close-chat');
+// Initialize Firebase (Compat Version)
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-// Login Elements
-const loginScreen = document.getElementById('login-screen');
-const usernameInput = document.getElementById('username-input');
-const joinBtn = document.getElementById('join-btn');
-
-// Chat Elements
-const messageContainer = document.getElementById('message-container');
-const messagesList = document.getElementById('messages-list');
+// === 2. UI VARIABLES ===
+const trigger = document.getElementById('secret-trigger');
+const decoy = document.getElementById('decoy-view');
+const chat = document.getElementById('chat-view');
+const loginOverlay = document.getElementById('login-overlay');
+const msgList = document.getElementById('messages-list');
 const msgInput = document.getElementById('msg-input');
-const sendBtn = document.getElementById('send-btn');
 
-let currentUser = '';
+let username = localStorage.getItem('chat_username') || '';
 let pressTimer;
 
-// === 1. STEALTH TRIGGER LOGIC ===
-
-function unlockChat() {
-    console.log("Unlocking Chat Interface...");
-    decoyView.classList.add('hidden');
-    chatView.classList.remove('hidden');
-    // Optional: Vibrate phone to indicate success (if supported)
-    if (navigator.vibrate) navigator.vibrate(200);
-}
-
-const startPress = (e) => {
-    // Prevent default browser context menu on long press
-    if(e.type === 'touchstart') {
-       // e.preventDefault(); // Uncomment if scrolling interferes
-    }
-    pressTimer = setTimeout(unlockChat, LONG_PRESS_DURATION);
+// === 3. STEALTH TRIGGER (Long Press) ===
+const unlockChat = () => {
+    decoy.style.filter = 'blur(10px)'; // Blur effect
+    setTimeout(() => {
+        decoy.classList.add('hidden');
+        chat.classList.remove('hidden');
+        if(username) loginOverlay.classList.add('hidden'); // Auto-skip login if known
+    }, 300);
 };
 
-const cancelPress = () => {
-    clearTimeout(pressTimer);
-};
+// Touch events (Mobile)
+trigger.addEventListener('touchstart', (e) => {
+    // e.preventDefault(); 
+    pressTimer = setTimeout(unlockChat, 2000); // 2 seconds
+});
+trigger.addEventListener('touchend', () => clearTimeout(pressTimer));
 
-// Listeners for Touch (Mobile)
-secretTrigger.addEventListener('touchstart', startPress);
-secretTrigger.addEventListener('touchend', cancelPress);
-secretTrigger.addEventListener('touchmove', cancelPress); // Cancel if they scroll
+// Mouse events (Laptop/PC)
+trigger.addEventListener('mousedown', () => pressTimer = setTimeout(unlockChat, 2000));
+trigger.addEventListener('mouseup', () => clearTimeout(pressTimer));
 
-// Listeners for Mouse (Laptop)
-secretTrigger.addEventListener('mousedown', startPress);
-secretTrigger.addEventListener('mouseup', cancelPress);
-secretTrigger.addEventListener('mouseleave', cancelPress);
-
-// Exit Button (Hides chat, shows decoy again)
-closeChatBtn.addEventListener('click', () => {
-    chatView.classList.add('hidden');
-    decoyView.classList.remove('hidden');
+// Close Button (Return to Decoy)
+document.getElementById('close-chat').addEventListener('click', () => {
+    chat.classList.add('hidden');
+    decoy.classList.remove('hidden');
+    decoy.style.filter = 'none';
 });
 
-// === 2. CHAT UI LOGIC ===
+// === 4. CHAT LOGIC ===
 
-joinBtn.addEventListener('click', () => {
-    const name = usernameInput.value.trim();
-    if (name) {
-        currentUser = name;
-        loginScreen.classList.add('hidden');
-        messageContainer.classList.remove('hidden');
-        addMessage('System', `Welcome, ${currentUser}.`, 'system');
+// Join Room
+document.getElementById('join-btn').addEventListener('click', () => {
+    const inputName = document.getElementById('username-input').value.trim();
+    if (inputName) {
+        username = inputName;
+        localStorage.setItem('chat_username', username);
+        loginOverlay.classList.add('hidden');
     }
 });
 
-sendBtn.addEventListener('click', sendMessage);
-msgInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
-});
-
-function sendMessage() {
+// Send Message
+const sendMessage = () => {
     const text = msgInput.value.trim();
-    if (text && currentUser) {
-        // 1. Add message to your own screen
-        addMessage(currentUser, text, 'sent');
-        
-        // 2. Clear input
+    if (text && username) {
+        // Send to Firebase
+        db.ref('messages').push({
+            user: username,
+            text: text,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
         msgInput.value = '';
-
-        // NOTE: Here is where you would send the data to your database/server
-        // example: database.ref('chats').push({ user: currentUser, text: text });
-        
-        // Simulate a reply for demo purposes
-        // setTimeout(() => {
-        //    addMessage('Partner', 'This is a simulated reply.', 'received');
-        // }, 1000);
     }
-}
+};
 
-function addMessage(user, text, type) {
-    const msgDiv = document.createElement('div');
-    msgDiv.classList.add('message', type);
+document.getElementById('send-btn').addEventListener('click', sendMessage);
+msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
+
+// Receive Messages (Real-time Listener)
+db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
+    const data = snapshot.val();
+    const isMe = data.user === username;
     
-    // Add user name if needed, or just text
-    if (type === 'received') {
-        msgDiv.innerText = `${user}: ${text}`;
+    // Create Message Bubble
+    const div = document.createElement('div');
+    div.className = `message ${isMe ? 'sent' : 'received'}`;
+    div.innerText = data.text;
+    
+    msgList.appendChild(div);
+    // Auto-scroll to bottom smoothly
+    msgList.scrollTo({ top: msgList.scrollHeight, behavior: 'smooth' });
+});
+
+// === 5. TYPING INDICATOR ===
+let typingTimeout;
+msgInput.addEventListener('input', () => {
+    if(username) {
+        db.ref('status/typing').set({ user: username, isTyping: true });
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            db.ref('status/typing').set({ user: username, isTyping: false });
+        }, 2000);
+    }
+});
+
+db.ref('status/typing').on('value', (snap) => {
+    const data = snap.val();
+    const indicator = document.getElementById('typing-indicator');
+    // Show only if SOMEONE ELSE is typing
+    if (data && data.isTyping && data.user !== username) {
+        indicator.classList.remove('hidden');
     } else {
-        msgDiv.innerText = text;
+        indicator.classList.add('hidden');
     }
-    
-    messagesList.appendChild(msgDiv);
-    // Auto-scroll to bottom
-    messagesList.scrollTop = messagesList.scrollHeight;
-}
+});
