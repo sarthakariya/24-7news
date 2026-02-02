@@ -1,4 +1,4 @@
-// === 1. FIREBASE CONFIGURATION (DO NOT CHANGE) ===
+// === 1. FIREBASE CONFIGURATION ===
 const firebaseConfig = {
   apiKey: "AIzaSyB0k8fWBMP6_bQB-vsUB7qtzKDlV2T_krs",
   authDomain: "news-589b8.firebaseapp.com",
@@ -33,10 +33,17 @@ const unlockChat = () => {
     if(username) loginOverlay.classList.add('hidden');
 };
 
-trigger.addEventListener('touchstart', (e) => { pressTimer = setTimeout(unlockChat, 2000); });
-trigger.addEventListener('touchend', () => clearTimeout(pressTimer));
-trigger.addEventListener('mousedown', () => pressTimer = setTimeout(unlockChat, 2000));
-trigger.addEventListener('mouseup', () => clearTimeout(pressTimer));
+// Handle Long Press
+const startPress = (e) => {
+    // Optional: e.preventDefault() if text selection bothers you
+    pressTimer = setTimeout(unlockChat, 2000); 
+};
+const cancelPress = () => clearTimeout(pressTimer);
+
+trigger.addEventListener('touchstart', startPress);
+trigger.addEventListener('touchend', cancelPress);
+trigger.addEventListener('mousedown', startPress);
+trigger.addEventListener('mouseup', cancelPress);
 
 document.getElementById('close-chat').addEventListener('click', () => {
     chat.classList.add('hidden');
@@ -55,26 +62,24 @@ document.getElementById('join-btn').addEventListener('click', () => {
     }
 });
 
-// Send Message
+// Send Function
 const sendMessage = (content, type = 'text') => {
     if(!username) return;
     
-    // Get Time HH:MM
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     db.ref('messages').push({
         user: username,
         content: content,
-        type: type, // 'text' or 'sticker'
+        type: type,
         time: timeString,
         timestamp: firebase.database.ServerValue.TIMESTAMP
     });
     msgInput.value = '';
-    stickerPanel.classList.add('hidden'); // Close sticker panel after sending
+    stickerPanel.classList.add('hidden');
 };
 
-// Event Listeners
 document.getElementById('send-btn').addEventListener('click', () => {
     const text = msgInput.value.trim();
     if(text) sendMessage(text, 'text');
@@ -87,16 +92,13 @@ msgInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Sticker Button
+// Sticker Toggle
 document.getElementById('sticker-btn').addEventListener('click', () => {
     stickerPanel.classList.toggle('hidden');
 });
+window.sendSticker = (emoji) => sendMessage(emoji, 'sticker');
 
-window.sendSticker = (emoji) => {
-    sendMessage(emoji, 'sticker');
-};
-
-// === 5. RECEIVE MESSAGES (With Ticks & Time) ===
+// === 5. RECEIVE MESSAGES ===
 db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
     const data = snapshot.val();
     const isMe = data.user === username;
@@ -104,17 +106,11 @@ db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
     const div = document.createElement('div');
     div.className = `message ${isMe ? 'sent' : 'received'}`;
     
-    // Check Content Type
-    let contentHtml = '';
-    if (data.type === 'sticker') {
-        contentHtml = `<div style="font-size: 40px;">${data.content}</div>`;
-    } else {
-        contentHtml = `<span class="msg-text">${data.content}</span>`;
-    }
+    let contentHtml = data.type === 'sticker' 
+        ? `<div style="font-size: 30px;">${data.content}</div>` 
+        : `<span class="msg-text">${data.content}</span>`;
 
-    // Add Metadata (Time + Ticks)
-    // Only show ticks for "Sent" messages
-    const ticks = isMe ? '<i class="fas fa-check-double" style="color: #add8e6;"></i>' : '';
+    const ticks = isMe ? '<i class="fas fa-check-double" style="color: #64d2ff;"></i>' : '';
 
     div.innerHTML = `
         ${contentHtml}
