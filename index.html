@@ -3,103 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Physics Investigatory Project 2025-26</title>
+    <title>Phys. Rev. Fluids: Boundary Layer Analysis</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
     <div id="decoy-view">
-        <div class="binder-ring"></div>
-        <div class="binder-ring" style="top: 150px"></div>
-        <div class="binder-ring" style="bottom: 150px"></div>
+        <div class="paper-container">
+            <div class="journal-header">
+                <div class="journal-name">PHYSICAL REVIEW FLUIDS</div>
+                <div class="journal-date">VOLUME 8, 054602 (2025)</div>
+            </div>
 
-        <div class="paper-sheet">
-            <div class="page-content">
-                <div class="school-header">
-                    <h2>KENDRIYA VIDYALAYA SANGATHAN</h2>
-                    <p>REGION: KOLKATA</p>
+            <div class="paper-title">
+                <h1>Computational Analysis of Boundary Layer Separation in High-Reynolds-Number Flows using Lattice Boltzmann Methods</h1>
+            </div>
+
+            <div class="authors">
+                <p><strong>A. J. Whitman, R. K. Singh, and E. Schrodinger</strong></p>
+                <p class="affiliation">Department of Physics, University of Oxford, OX1 3PU, United Kingdom</p>
+                <p class="received-date">(Received 12 November 2024; accepted 10 January 2025; published 3 February 2026)</p>
+            </div>
+
+            <div class="abstract-section">
+                <p><strong>ABSTRACT</strong></p>
+                <p>
+                    We present a numerical study of turbulent boundary layer separation over a curved surface using the Lattice Boltzmann Method (LBM). 
+                    Unlike traditional Navier-Stokes solvers, LBM provides a mesoscopic description of fluid dynamics. 
+                    The simulation results indicate that at $Re > 10^6$, the adverse pressure gradient induces a separation bubble 
+                    characterized by a localized reversal of flow. We analyze the vorticity dynamics and the coherent structures 
+                    within the wake region. Our findings suggest that surface roughness elements of height $k^+ < 5$ can effectively delay separation.
+                </p>
+            </div>
+
+            <div class="columns">
+                <div class="col">
+                    <h3>I. INTRODUCTION</h3>
+                    <p>
+                        The control of flow separation is of paramount importance in aerodynamic design. 
+                        The boundary layer, a thin region adjacent to the surface where viscous effects are dominant, 
+                        is governed by the Navier-Stokes equations [1].
+                    </p>
+                    <p>
+                        Prandtl's boundary layer theory simplifies the momentum equation to:
+                    </p>
+                    <div class="equation">
+                        $$ u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y} = -\frac{1}{\rho}\frac{dP}{dx} + \nu \frac{\partial^2 u}{\partial y^2} $$
+                    </div>
+                    <p>
+                        When $\frac{dP}{dx} > 0$ (adverse pressure gradient), the fluid particles decelerate. 
+                        If the kinetic energy is insufficient to overcome this gradient, the velocity profile inflection point ($ \frac{\partial^2 u}{\partial y^2} = 0 $) 
+                        moves away from the wall, leading to separation [2].
+                    </p>
+
+                    <h3>II. METHODOLOGY</h3>
+                    <p>
+                        The simulation domain consists of a 2D airfoil section (NACA 0012). The grid resolution was set to 
+                        $\Delta x = 0.001c$. We utilized the Bhatnagar-Gross-Krook (BGK) collision operator.
+                    </p>
                 </div>
-                <div class="project-title-box">
-                    <h1>PHYSICS</h1>
-                    <h2>INVESTIGATORY PROJECT</h2>
-                    <p>SESSION: 2025 - 2026</p>
-                </div>
-                <div class="submission-details">
-                    <p><strong>TOPIC:</strong> FLUID DYNAMICS & BERNOULLI'S PRINCIPLE</p>
-                    <br>
-                    <p>SUBMITTED BY: <strong>CLASS XII - SC</strong></p>
-                    <p>ROLL NO: <strong>226140</strong></p>
+
+                <div class="col">
+                    <h3>III. RESULTS AND DISCUSSION</h3>
+                    <p>
+                        Figure 1 depicts the velocity contours at an angle of attack $\alpha = 15^\circ$. 
+                        The separation point moves upstream as the Reynolds number increases.
+                    </p>
+                    
+                    <div class="css-figure">
+                        <div class="fig-box">
+                            <div class="vector v1"></div><div class="vector v2"></div><div class="vector v3"></div>
+                            <div class="vector v4"></div><div class="vector v5"></div><div class="vector v6"></div>
+                            <div class="curve"></div>
+                        </div>
+                        <p class="caption">FIG 1. Vector field visualization of the recirculation zone.</p>
+                    </div>
+
+                    <p>
+                        The kinetic energy budget analysis reveals that the production of turbulent kinetic energy (TKE) 
+                        peaks within the shear layer. The dissipation rate $\epsilon$ balances the production term in the equilibrium region.
+                    </p>
+
+                    <h3>IV. CONCLUSION</h3>
+                    <p>
+                        We have demonstrated that LBM is a viable tool for predicting separation onset. 
+                        Future work will focus on 3D Large Eddy Simulations (LES).
+                    </p>
                 </div>
             </div>
+
+            <hr class="footer-line">
             
-            <hr class="page-break">
-
-            <div class="page-content">
-                <h3>CERTIFICATE</h3>
-                <p>
-                    This is to certify that the student of Class XII has successfully completed the research on the below mentioned 
-                    project under the guidance of Mr. S.K. Sharma (PGT Physics) during the academic year 2025-26 in partial 
-                    fulfillment of the Physics practical examination conducted by AISSCE.
-                </p>
-                <div class="signature-box">
-                    <div>External Examiner</div>
-                    <div>Internal Examiner</div>
-                </div>
-            </div>
-
-            <hr class="page-break">
-
-            <div class="page-content">
-                <h3>ACKNOWLEDGEMENT</h3>
-                <p>
-                    I would like to express my special thanks of gratitude to my teacher as well as our principal who gave me the 
-                    golden opportunity to do this wonderful project on the topic "Fluid Dynamics", which also helped me in doing 
-                    a lot of Research and I came to know about so many new things.
-                </p>
-                <p>
-                    Secondly, I would also like to thank my parents and friends who helped me a lot in finalizing this project 
-                    within the limited time frame.
-                </p>
-            </div>
-
-            <hr class="page-break">
-
-            <div class="page-content">
-                <h3>THEORY & PRINCIPLE</h3>
-                <p>
-                    <strong>Bernoulli's Principle:</strong> It states that for a streamline flow of an ideal liquid, the total 
-                    energy (pressure energy, potential energy, and kinetic energy) per unit mass remains constant at every cross-section.
-                </p>
-                
-                <div class="text-formula">
-                    P + ½ρv² + ρgh = K (Constant)
-                </div>
-
-                <p>
-                    Where <em>P</em> is Pressure, <em>ρ</em> is Density, and <em>v</em> is Velocity.
-                    This explains why airplanes lift. The shape of the wing (airfoil) forces air to move faster over the top surface.
-                </p>
-
-                <div class="css-diagram">
-                    <div class="wing-shape"></div>
-                    <div class="arrow a1"></div>
-                    <div class="arrow a2"></div>
-                    <div class="label">Airfoil Lift Mechanism</div>
-                </div>
-
-                <p>
-                    As velocity increases, pressure decreases (P_top < P_bottom), creating an upward force called Lift.
-                </p>
-
-                <div class="bibliography-section">
-                    <h4>BIBLIOGRAPHY</h4>
-                    <ul>
-                        <li>NCERT Physics Textbook Part-II</li>
-                        <li id="secret-trigger">H.C. Verma, Concepts of Physics, Vol 1</li>
-                        <li>Wikipedia.org/wiki/Fluid_Mechanics</li>
-                    </ul>
-                </div>
+            <div class="footer-ref">
+                <p>2469-990X/2025/8(5)/054602(12)</p>
+                <p>© 2026 American Physical Society</p>
+                <p class="doi-link" id="secret-trigger">DOI: 10.1103/PhysRevFluids.8.054602</p>
             </div>
         </div>
     </div>
@@ -108,9 +109,9 @@
         <div class="chat-container">
             <div class="chat-header">
                 <div class="header-left">
-                    <div class="avatar-circle"><i class="fas fa-user-secret"></i></div>
+                    <div class="avatar-circle"><i class="fas fa-atom"></i></div>
                     <div class="header-info">
-                        <h3 id="chat-title">Secure Room</h3>
+                        <h3 id="chat-title">Quantum Link</h3>
                         <span class="status-text">Encrypted • Online</span>
                     </div>
                 </div>
@@ -119,39 +120,36 @@
 
             <div id="login-overlay" class="overlay">
                 <div class="login-box">
-                    <i class="fas fa-shield-alt lock-icon"></i>
-                    <h3>Identity Verification</h3>
-                    <input type="text" id="username-input" placeholder="Enter Alias" autocomplete="off">
-                    <button id="join-btn">Enter Channel</button>
+                    <i class="fas fa-fingerprint lock-icon"></i>
+                    <h3>Authenticate</h3>
+                    <input type="text" id="username-input" placeholder="Codename" autocomplete="off">
+                    <button id="join-btn">Access System</button>
                 </div>
             </div>
 
             <div id="messages-list">
-                <div class="date-divider"><span>Today</span></div>
-                </div>
+                <div class="date-divider"><span>Session Started</span></div>
+            </div>
 
             <div id="sticker-panel" class="hidden">
                 <div class="sticker" onclick="sendSticker('❤️')">❤️</div>
                 <div class="sticker" onclick="sendSticker('😂')">😂</div>
-                <div class="sticker" onclick="sendSticker('👍')">👍</div>
+                <div class="sticker" onclick="sendSticker('🤔')">🤔</div>
                 <div class="sticker" onclick="sendSticker('😭')">😭</div>
                 <div class="sticker" onclick="sendSticker('🔥')">🔥</div>
-                <div class="sticker" onclick="sendSticker('👀')">👀</div>
-                <div class="sticker" onclick="sendSticker('💀')">💀</div>
-                <div class="sticker" onclick="sendSticker('🎉')">🎉</div>
+                <div class="sticker" onclick="sendSticker('👍')">👍</div>
             </div>
 
             <div class="input-area">
                 <button id="sticker-btn"><i class="far fa-smile"></i></button>
-                <input type="text" id="msg-input" placeholder="Message..." autocomplete="off">
-                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="msg-input" placeholder="Type here..." autocomplete="off">
+                <button id="send-btn"><i class="fas fa-arrow-up"></i></button>
             </div>
         </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
