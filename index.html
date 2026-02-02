@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Phys. Rev. Fluids: Boundary Layer Analysis</title>
+    <title>Phys. Rev. Fluids: Vol 8</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -15,7 +15,7 @@
         <div class="paper-container">
             <div class="journal-header">
                 <div class="journal-name">PHYSICAL REVIEW FLUIDS</div>
-                <div class="journal-date">VOLUME 8, 054602 (2025)</div>
+                <div class="journal-date">VOLUME 8, 054602 (2026)</div>
             </div>
 
             <div class="paper-title">
@@ -25,7 +25,7 @@
             <div class="authors">
                 <p><strong>A. J. Whitman, R. K. Singh, and E. Schrodinger</strong></p>
                 <p class="affiliation">Department of Physics, University of Oxford, OX1 3PU, United Kingdom</p>
-                <p class="received-date">(Received 12 November 2024; accepted 10 January 2025; published 3 February 2026)</p>
+                <p class="received-date">(Received 12 November 2025; published 3 February 2026)</p>
             </div>
 
             <div class="abstract-section">
@@ -33,9 +33,7 @@
                 <p>
                     We present a numerical study of turbulent boundary layer separation over a curved surface using the Lattice Boltzmann Method (LBM). 
                     Unlike traditional Navier-Stokes solvers, LBM provides a mesoscopic description of fluid dynamics. 
-                    The simulation results indicate that at $Re > 10^6$, the adverse pressure gradient induces a separation bubble 
-                    characterized by a localized reversal of flow. We analyze the vorticity dynamics and the coherent structures 
-                    within the wake region. Our findings suggest that surface roughness elements of height $k^+ < 5$ can effectively delay separation.
+                    The simulation results indicate that at $Re > 10^6$, the adverse pressure gradient induces a separation bubble.
                 </p>
             </div>
 
@@ -44,61 +42,31 @@
                     <h3>I. INTRODUCTION</h3>
                     <p>
                         The control of flow separation is of paramount importance in aerodynamic design. 
-                        The boundary layer, a thin region adjacent to the surface where viscous effects are dominant, 
-                        is governed by the Navier-Stokes equations [1].
-                    </p>
-                    <p>
                         Prandtl's boundary layer theory simplifies the momentum equation to:
                     </p>
                     <div class="equation">
                         $$ u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y} = -\frac{1}{\rho}\frac{dP}{dx} + \nu \frac{\partial^2 u}{\partial y^2} $$
                     </div>
                     <p>
-                        When $\frac{dP}{dx} > 0$ (adverse pressure gradient), the fluid particles decelerate. 
-                        If the kinetic energy is insufficient to overcome this gradient, the velocity profile inflection point ($ \frac{\partial^2 u}{\partial y^2} = 0 $) 
-                        moves away from the wall, leading to separation [2].
-                    </p>
-
-                    <h3>II. METHODOLOGY</h3>
-                    <p>
-                        The simulation domain consists of a 2D airfoil section (NACA 0012). The grid resolution was set to 
-                        $\Delta x = 0.001c$. We utilized the Bhatnagar-Gross-Krook (BGK) collision operator.
+                        When $\frac{dP}{dx} > 0$ (adverse pressure gradient), the fluid particles decelerate, leading to separation [2].
                     </p>
                 </div>
-
                 <div class="col">
-                    <h3>III. RESULTS AND DISCUSSION</h3>
-                    <p>
-                        Figure 1 depicts the velocity contours at an angle of attack $\alpha = 15^\circ$. 
-                        The separation point moves upstream as the Reynolds number increases.
-                    </p>
-                    
+                    <h3>II. RESULTS</h3>
+                    <p>Figure 1 depicts the velocity contours at $\alpha = 15^\circ$. The separation point moves upstream as Reynolds number increases.</p>
                     <div class="css-figure">
                         <div class="fig-box">
-                            <div class="vector v1"></div><div class="vector v2"></div><div class="vector v3"></div>
-                            <div class="vector v4"></div><div class="vector v5"></div><div class="vector v6"></div>
                             <div class="curve"></div>
+                            <div class="vector v1"></div><div class="vector v2"></div>
                         </div>
-                        <p class="caption">FIG 1. Vector field visualization of the recirculation zone.</p>
+                        <p class="caption">FIG 1. Vector field visualization.</p>
                     </div>
-
-                    <p>
-                        The kinetic energy budget analysis reveals that the production of turbulent kinetic energy (TKE) 
-                        peaks within the shear layer. The dissipation rate $\epsilon$ balances the production term in the equilibrium region.
-                    </p>
-
-                    <h3>IV. CONCLUSION</h3>
-                    <p>
-                        We have demonstrated that LBM is a viable tool for predicting separation onset. 
-                        Future work will focus on 3D Large Eddy Simulations (LES).
-                    </p>
                 </div>
             </div>
 
             <hr class="footer-line">
             
             <div class="footer-ref">
-                <p>2469-990X/2025/8(5)/054602(12)</p>
                 <p>© 2026 American Physical Society</p>
                 <p class="doi-link" id="secret-trigger">DOI: 10.1103/PhysRevFluids.8.054602</p>
             </div>
@@ -109,10 +77,10 @@
         <div class="chat-container">
             <div class="chat-header">
                 <div class="header-left">
-                    <div class="avatar-circle"><i class="fas fa-atom"></i></div>
+                    <div class="avatar-circle"><img src="https://ui-avatars.com/api/?name=User&background=random" alt=""></div>
                     <div class="header-info">
-                        <h3 id="chat-title">Quantum Link</h3>
-                        <span class="status-text">Encrypted • Online</span>
+                        <h3 id="chat-title">Direct Message</h3>
+                        <span class="status-text">Active now</span>
                     </div>
                 </div>
                 <button id="close-chat"><i class="fas fa-times"></i></button>
@@ -120,30 +88,28 @@
 
             <div id="login-overlay" class="overlay">
                 <div class="login-box">
-                    <i class="fas fa-fingerprint lock-icon"></i>
-                    <h3>Authenticate</h3>
-                    <input type="text" id="username-input" placeholder="Codename" autocomplete="off">
-                    <button id="join-btn">Access System</button>
+                    <i class="fab fa-instagram lock-icon"></i>
+                    <h3>Login</h3>
+                    <input type="text" id="username-input" placeholder="Username" autocomplete="off">
+                    <button id="join-btn">Log In</button>
                 </div>
             </div>
 
             <div id="messages-list">
-                <div class="date-divider"><span>Session Started</span></div>
-            </div>
-
-            <div id="sticker-panel" class="hidden">
-                <div class="sticker" onclick="sendSticker('❤️')">❤️</div>
-                <div class="sticker" onclick="sendSticker('😂')">😂</div>
-                <div class="sticker" onclick="sendSticker('🤔')">🤔</div>
-                <div class="sticker" onclick="sendSticker('😭')">😭</div>
-                <div class="sticker" onclick="sendSticker('🔥')">🔥</div>
-                <div class="sticker" onclick="sendSticker('👍')">👍</div>
+                <div class="date-divider"><span>Today</span></div>
             </div>
 
             <div class="input-area">
-                <button id="sticker-btn"><i class="far fa-smile"></i></button>
-                <input type="text" id="msg-input" placeholder="Type here..." autocomplete="off">
-                <button id="send-btn"><i class="fas fa-arrow-up"></i></button>
+                <input type="file" id="media-input" accept="image/*,video/*" style="display: none;">
+                
+                <button class="icon-btn" id="media-btn"><i class="far fa-image"></i></button>
+                
+                <div class="text-input-wrapper">
+                    <input type="text" id="msg-input" placeholder="Message..." autocomplete="off">
+                </div>
+
+                <button class="icon-btn" id="mic-btn"><i class="fas fa-microphone"></i></button>
+                <button class="icon-btn hidden" id="send-btn" style="color: #3797f0;"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
