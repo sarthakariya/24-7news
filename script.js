@@ -1,4 +1,3 @@
-// === 1. FIREBASE CONFIGURATION ===
 const firebaseConfig = {
   apiKey: "AIzaSyB0k8fWBMP6_bQB-vsUB7qtzKDlV2T_krs",
   authDomain: "news-589b8.firebaseapp.com",
@@ -13,7 +12,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// === 2. VARIABLES ===
 const trigger = document.getElementById('secret-trigger');
 const decoy = document.getElementById('decoy-view');
 const chat = document.getElementById('chat-view');
@@ -22,46 +20,54 @@ const msgInput = document.getElementById('msg-input');
 const mediaInput = document.getElementById('media-input');
 const micBtn = document.getElementById('mic-btn');
 const sendBtn = document.getElementById('send-btn');
+const loginOverlay = document.getElementById('login-overlay');
 
-let username = localStorage.getItem('chat_username') || '';
+let username = '';
 let pressTimer;
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
 
-// === 3. TRIGGER LOGIC ===
+// TRIGGER (2 seconds)
 const unlockChat = () => {
     decoy.classList.add('hidden');
     chat.classList.remove('hidden');
-    if(username) document.getElementById('login-overlay').classList.add('hidden');
+    loginOverlay.classList.remove('hidden');
+    document.getElementById('username-input').value = '';
 };
 
-const startPress = () => pressTimer = setTimeout(unlockChat, 2000);
+const startPress = (e) => {
+    // Prevent default context menu
+    if (e.type === 'touchstart') {
+       // e.preventDefault(); 
+    }
+    pressTimer = setTimeout(unlockChat, 2000);
+};
 const cancelPress = () => clearTimeout(pressTimer);
 
 trigger.addEventListener('touchstart', startPress);
 trigger.addEventListener('touchend', cancelPress);
 trigger.addEventListener('mousedown', startPress);
 trigger.addEventListener('mouseup', cancelPress);
+// Prevent Copying Context Menu
+trigger.addEventListener('contextmenu', event => event.preventDefault());
 
 document.getElementById('close-chat').addEventListener('click', () => {
     chat.classList.add('hidden');
     decoy.classList.remove('hidden');
+    username = '';
 });
 
-// === 4. CHAT FUNCTIONS ===
-
-// Login
+// LOGIN
 document.getElementById('join-btn').addEventListener('click', () => {
     const name = document.getElementById('username-input').value.trim();
     if(name) {
         username = name;
-        localStorage.setItem('chat_username', username);
-        document.getElementById('login-overlay').classList.add('hidden');
+        loginOverlay.classList.add('hidden');
     }
 });
 
-// Toggle Send/Mic Button based on input
+// INPUT HANDLER
 msgInput.addEventListener('input', () => {
     if(msgInput.value.trim().length > 0) {
         micBtn.classList.add('hidden');
@@ -72,13 +78,13 @@ msgInput.addEventListener('input', () => {
     }
 });
 
-// SEND TEXT
+// SEND MESSAGE
 const sendMessage = (content, type = 'text') => {
     if(!username) return;
     db.ref('messages').push({
         user: username,
         content: content,
-        type: type, // 'text', 'image', 'video', 'audio'
+        type: type,
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         likes: false
     });
@@ -89,17 +95,12 @@ const sendMessage = (content, type = 'text') => {
 
 sendBtn.addEventListener('click', () => sendMessage(msgInput.value.trim()));
 
-// SEND MEDIA (Photo/Video)
+// SEND MEDIA
 document.getElementById('media-btn').addEventListener('click', () => mediaInput.click());
-
 mediaInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-        // Warning for large files
-        if(file.size > 1000000) { // 1MB limit for smooth performance
-            alert("File too large. Please send smaller images/videos.");
-            return;
-        }
+        if(file.size > 1000000) { alert("File too large. Please send smaller images/videos."); return; }
         const reader = new FileReader();
         reader.onload = (event) => {
             const type = file.type.startsWith('image') ? 'image' : 'video';
@@ -112,7 +113,6 @@ mediaInput.addEventListener('change', (e) => {
 // RECORD AUDIO
 micBtn.addEventListener('click', async () => {
     if (!isRecording) {
-        // Start Recording
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
@@ -120,42 +120,30 @@ micBtn.addEventListener('click', async () => {
             isRecording = true;
             micBtn.classList.add('recording');
             audioChunks = [];
-
-            mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-            });
-
+            mediaRecorder.addEventListener("dataavailable", event => audioChunks.push(event.data));
             mediaRecorder.addEventListener("stop", () => {
                 const audioBlob = new Blob(audioChunks);
                 const reader = new FileReader();
                 reader.readAsDataURL(audioBlob);
-                reader.onloadend = () => {
-                   sendMessage(reader.result, 'audio');
-                };
+                reader.onloadend = () => sendMessage(reader.result, 'audio');
             });
         } catch(err) { alert("Microphone access denied"); }
     } else {
-        // Stop Recording
         mediaRecorder.stop();
         isRecording = false;
         micBtn.classList.remove('recording');
     }
 });
 
-// === 5. DISPLAY MESSAGES & REACTIONS ===
+// RECEIVE MESSAGES
 db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
     const data = snapshot.val();
     const key = snapshot.key;
     const isMe = data.user === username;
-    
     const div = document.createElement('div');
     div.className = `message ${isMe ? 'sent' : 'received'}`;
     div.id = key;
-
-    // Double Tap to Like
-    div.addEventListener('dblclick', () => {
-        db.ref(`messages/${key}/likes`).set(!data.likes);
-    });
+    div.addEventListener('dblclick', () => db.ref(`messages/${key}/likes`).set(!data.likes));
 
     let contentHtml = '';
     if(data.type === 'text') contentHtml = data.content;
@@ -163,24 +151,18 @@ db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
     else if(data.type === 'video') contentHtml = `<div class="media-content"><video src="${data.content}" controls></video></div>`;
     else if(data.type === 'audio') contentHtml = `<div class="audio-player"><audio src="${data.content}" controls></audio></div>`;
 
-    // Heart Logic
     const heartHtml = data.likes ? `<div class="reaction-heart">❤️</div>` : '';
-
     div.innerHTML = `${contentHtml}${heartHtml}`;
     msgList.appendChild(div);
     msgList.scrollTo(0, msgList.scrollHeight);
 });
 
-// Listen for Like Updates
 db.ref('messages').limitToLast(50).on('child_changed', (snapshot) => {
     const data = snapshot.val();
     const div = document.getElementById(snapshot.key);
     if(div) {
         const existingHeart = div.querySelector('.reaction-heart');
-        if(data.likes && !existingHeart) {
-            div.insertAdjacentHTML('beforeend', `<div class="reaction-heart">❤️</div>`);
-        } else if(!data.likes && existingHeart) {
-            existingHeart.remove();
-        }
+        if(data.likes && !existingHeart) div.insertAdjacentHTML('beforeend', `<div class="reaction-heart">❤️</div>`);
+        else if(!data.likes && existingHeart) existingHeart.remove();
     }
 });
