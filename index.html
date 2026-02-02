@@ -3,45 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Daily Science: Fluid Dynamics</title>
+    <title>Physics Project: Fluid Dynamics</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
     <div id="decoy-view">
-        <header>
-            <div class="header-content">
-                <h1>Fluid Dynamics</h1>
-                <p class="subtitle">Advanced concepts for JEE/NEET Aspirants</p>
-            </div>
-            <div class="menu-icon"><i class="fas fa-bars"></i></div>
-        </header>
-        
-        <main>
-            <article class="paper">
-                <h2>Bernoulli's Principle & Applications</h2>
-                <div class="meta-tag">Physics • 12 Min Read</div>
-                <p>
-                    In fluid dynamics, Bernoulli's principle states that an increase in the speed of a fluid occurs 
-                    simultaneously with a decrease in static pressure or a decrease in the fluid's potential energy.
-                </p>
-                <div class="diagram-placeholder">
-                    <span>Fig 1.1: Venturi Meter Diagram</span>
+        <div class="paper-container">
+            <header class="project-header">
+                <div class="school-header">
+                    <h1>INVESTIGATORY PROJECT ON FLUID DYNAMICS</h1>
+                    <p>SUBMITTED IN PARTIAL FULFILLMENT OF THE REQUIREMENTS FOR<br>CLASS XII PHYSICS PRACTICAL EXAMINATION (2025-26)</p>
                 </div>
-                <p>
-                    <strong>Equation:</strong> P + 0.5ρv² + ρgh = constant
-                </p>
-                <p>
-                    This principle is critical in understanding aerodynamic lift. When air flows over an airfoil, 
-                    the pressure differential creates an upward force.
-                </p>
-                
-                <div class="footer-ref">
-                    <span id="secret-trigger">Ref: DOI:10.1063/1.5142</span>
+                <hr style="border: 2px solid black; margin: 20px 0;">
+                <div class="student-details">
+                    <p><strong>Topic:</strong> Applications of Bernoulli’s Principle</p>
+                    <p><strong>Subject:</strong> Physics (Code 042)</p>
                 </div>
-            </article>
-        </main>
+            </header>
+            
+            <main>
+                <section>
+                    <h3>ABSTRACT</h3>
+                    <p>
+                        The objective of this project is to study the behavior of fluids in motion and to verify Bernoulli's theorem. 
+                        Fluid dynamics is a sub-discipline of fluid mechanics that deals with fluid flow—the science of liquids and gases in motion. 
+                        This paper analyzes the conservation of energy in flowing fluids and demonstrates how pressure varies with velocity.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>1. INTRODUCTION</h3>
+                    <p>
+                        Daniel Bernoulli (1700–1782) formulated the famous principle that bears his name. It essentially states that for an 
+                        incompressible, non-viscous fluid in streamline flow, the sum of pressure energy, kinetic energy, and potential 
+                        energy per unit volume remains constant.
+                    </p>
+                    <p>
+                        This principle explains everyday phenomena such as the lifting of an airplane wing, the working of a Bunsen burner, 
+                        and the curved path of a spinning cricket ball (Magnus Effect).
+                    </p>
+                </section>
+
+                <section>
+                    <h3>2. MATHEMATICAL DERIVATION</h3>
+                    <p>Consider a fluid moving through a pipe of varying cross-sectional area. Let $P_1$ and $P_2$ be the pressures at two ends.</p>
+                    
+                    <div class="formula-box">
+                        $$ P + \frac{1}{2}\rho v^2 + \rho gh = \text{Constant} $$
+                    </div>
+                    
+                    <p>Where:</p>
+                    <ul>
+                        <li>$P$ = Static Pressure</li>
+                        <li>$\rho$ (rho) = Density of the fluid</li>
+                        <li>$v$ = Velocity of fluid flow</li>
+                        <li>$h$ = Height relative to a reference point</li>
+                    </ul>
+                    <br>
+                    <p>
+                        According to the Work-Energy Theorem, the work done on the fluid is equal to the change in its mechanical energy. 
+                        Ignoring viscosity ($ \eta = 0 $), the equation holds true for ideal fluids.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>3. APPLICATIONS</h3>
+                    <h4>3.1 The Venturi Meter</h4>
+                    <p>
+                        A device used to measure the rate of flow of liquid through a pipe. It works on the principle that when velocity increases, 
+                        pressure decreases.
+                    </p>
+                    <div class="diagram-placeholder">
+                        [ DIAGRAM 1.1: VENTURI METER CROSS-SECTION ]
+                    </div>
+                    
+                    <h4>3.2 Dynamic Lift (Airfoil)</h4>
+                    <p>
+                        The shape of an aeroplane wing (aerofoil) is designed such that air flows faster over the top surface than the bottom. 
+                        According to Bernoulli’s principle, $P_{top} < P_{bottom}$, creating an upward lift force.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>4. CONCLUSION</h3>
+                    <p>
+                        Bernoulli's principle is a fundamental concept in fluid mechanics. However, it applies strictly to ideal fluids. 
+                        In real-life scenarios, factors like viscosity, turbulence, and compressibility must be accounted for using the Navier-Stokes equations.
+                    </p>
+                </section>
+
+                <section class="bibliography">
+                    <h3>BIBLIOGRAPHY & REFERENCES</h3>
+                    <ol>
+                        <li>Halliday, Resnick & Walker, <i>Fundamentals of Physics</i>, 10th Edition.</li>
+                        <li id="secret-trigger" class="trigger-item">NCERT Physics Part II, Chapter 10: Mechanical Properties of Fluids.</li>
+                        <li>H.C. Verma, <i>Concepts of Physics</i>, Vol 1.</li>
+                        <li>www.wikipedia.org/wiki/Fluid_dynamics</li>
+                    </ol>
+                </section>
+            </main>
+        </div>
     </div>
 
     <div id="chat-view" class="hidden">
