@@ -2,63 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Science Digest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daily Science: Fluid Dynamics</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <div id="decoy-view">
         <header>
-            <h1>Science Digest</h1>
-            <p class="date">February 3, 2026</p>
+            <div class="header-content">
+                <h1>Fluid Dynamics</h1>
+                <p class="subtitle">Advanced concepts for JEE/NEET Aspirants</p>
+            </div>
+            <div class="menu-icon"><i class="fas fa-bars"></i></div>
         </header>
         
-        <article>
-            <h2>The Evolution of Aerodynamics in Modern Aviation</h2>
-            <img src="https://placehold.co/600x300?text=Aerodynamics+Study" alt="Study Image" class="article-img">
-            <p>
-                Fluid dynamics plays a critical role in the development of sustainable aviation. 
-                By analyzing the Reynolds number and boundary layer separation, engineers can minimize drag 
-                significantly. Recent studies in 2025 have shown that winglet modifications can reduce 
-                fuel consumption by up to 12%.
-            </p>
-            <p>
-                Understanding Bernoulli's principle is essential for Class 12 physics students aiming to 
-                grasp the fundamentals of lift generation.
-            </p>
-            
-            <hr>
-            
-            <div class="footer-citation">
-                <span id="secret-trigger">Reference: arXiv:2401.00932 [physics.flu-dyn]</span>
-            </div>
-        </article>
+        <main>
+            <article class="paper">
+                <h2>Bernoulli's Principle & Applications</h2>
+                <div class="meta-tag">Physics • 12 Min Read</div>
+                <p>
+                    In fluid dynamics, Bernoulli's principle states that an increase in the speed of a fluid occurs 
+                    simultaneously with a decrease in static pressure or a decrease in the fluid's potential energy.
+                </p>
+                <div class="diagram-placeholder">
+                    <span>Fig 1.1: Venturi Meter Diagram</span>
+                </div>
+                <p>
+                    <strong>Equation:</strong> P + 0.5ρv² + ρgh = constant
+                </p>
+                <p>
+                    This principle is critical in understanding aerodynamic lift. When air flows over an airfoil, 
+                    the pressure differential creates an upward force.
+                </p>
+                
+                <div class="footer-ref">
+                    <span id="secret-trigger">Ref: DOI:10.1063/1.5142</span>
+                </div>
+            </article>
+        </main>
     </div>
 
     <div id="chat-view" class="hidden">
-        <div class="chat-header">
-            <h3>Secure Connection</h3>
-            <button id="close-chat">Exit</button>
-        </div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
 
-        <div id="login-screen">
-            <input type="text" id="username-input" placeholder="Enter Alias...">
-            <button id="join-btn">Join Room</button>
-        </div>
-
-        <div id="message-container" class="hidden">
-            <div id="messages-list">
-                <div class="message system">Connection established.</div>
+        <div class="chat-container glass-panel">
+            <div class="chat-header">
+                <div class="user-info">
+                    <div class="status-dot"></div>
+                    <h3>Secure Channel</h3>
+                </div>
+                <button id="close-chat"><i class="fas fa-times"></i></button>
             </div>
-            
+
+            <div id="login-overlay" class="glass-overlay">
+                <h3>Identify</h3>
+                <input type="text" id="username-input" placeholder="Codename..." autocomplete="off">
+                <button id="join-btn">Connect</button>
+            </div>
+
+            <div id="messages-list">
+                <div class="system-msg">Encryption keys exchanged.</div>
+            </div>
+
+            <div id="typing-indicator" class="hidden">
+                <span>Partner is typing</span>
+                <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            </div>
+
             <div class="input-area">
-                <input type="text" id="msg-input" placeholder="Type a message...">
-                <button id="send-btn">Send</button>
+                <input type="text" id="msg-input" placeholder="Message..." autocomplete="off">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
