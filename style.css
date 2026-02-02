@@ -1,49 +1,95 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 :root {
-    --primary-color: #2563eb;
     --glass-bg: rgba(20, 20, 20, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --text-color: #e2e8f0;
+    --primary-color: #2563eb;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: #f0f2f5;
-    overflow: hidden; /* Prevents scroll bounce on mobile */
+    background-color: #e0e0e0; /* Gray background behind the paper */
     height: 100vh;
+    overflow: hidden;
 }
 
-/* === DECOY STYLES (Academic Look) === */
+/* === DECOY: ACADEMIC PAPER STYLE === */
 #decoy-view {
-    font-family: 'Merriweather', serif;
-    background: #fff;
+    font-family: 'Times New Roman', serif;
+    color: #000;
     height: 100%;
-    color: #333;
-    padding: 20px;
     overflow-y: auto;
-    transition: filter 0.5s ease;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.header-content h1 { font-size: 1.8rem; margin-bottom: 5px; }
-.subtitle { font-family: 'Inter', sans-serif; color: #666; font-size: 0.9rem; }
-.menu-icon { position: absolute; top: 20px; right: 20px; font-size: 1.2rem; }
+.paper-container {
+    background: white;
+    width: 100%;
+    max-width: 800px; /* A4 width simulation */
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 50px;
+}
 
-.paper { background: #fff; padding: 20px 0; line-height: 1.8; }
-.meta-tag { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #2563eb; margin-bottom: 20px; font-weight: bold; }
+.school-header { text-align: center; margin-bottom: 20px; }
+.school-header h1 { font-size: 1.4rem; font-weight: bold; text-decoration: underline; margin-bottom: 10px; }
+.school-header p { font-size: 0.9rem; }
+
+.student-details { font-size: 1rem; margin-bottom: 30px; }
+
+h3 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+p { line-height: 1.6; margin-bottom: 15px; text-align: justify; font-size: 1.05rem; }
+
+ul, ol { margin-left: 30px; margin-bottom: 15px; }
+li { margin-bottom: 5px; }
+
+.formula-box {
+    text-align: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin: 15px 0;
+    font-weight: bold;
+}
 
 .diagram-placeholder {
-    width: 100%; height: 150px; background: #e5e7eb;
-    border: 1px dashed #9ca3af; display: flex; align-items: center; justify-content: center;
-    margin: 20px 0; color: #6b7280; font-style: italic; font-family: 'Inter', sans-serif;
+    width: 100%;
+    height: 200px;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background: #fff;
+    margin: 20px 0;
 }
 
-/* The Secret Trigger */
-.footer-ref { margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; }
-#secret-trigger { color: #9ca3af; font-size: 0.8rem; transition: color 0.3s; user-select: none; }
+/* The Trigger Item Style */
+.trigger-item {
+    cursor: text;
+    /* Make it look exactly like normal text */
+    color: black; 
+    transition: background-color 0.2s;
+}
 
-/* === CHAT STYLES (Modern) === */
+/* Highlight it slightly when touched so you know it's working (Optional) */
+.trigger-item:active {
+    background-color: #ffff00;
+}
+
+/* === CHAT STYLES (Modern Overlay) === */
 .hidden { display: none !important; }
 
 #chat-view {
@@ -52,10 +98,7 @@ body {
     font-family: 'Inter', sans-serif;
     display: flex; justify-content: center; align-items: center;
     z-index: 999;
-    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
 /* Animated Blobs */
 .blob { position: absolute; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.6; }
@@ -86,9 +129,7 @@ body {
 
 .message {
     max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 0.95rem; line-height: 1.4; color: white;
-    position: relative; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 .message.sent { align-self: flex-end; background: linear-gradient(135deg, #6366f1, #3b82f6); border-bottom-right-radius: 4px; }
 .message.received { align-self: flex-start; background: rgba(255,255,255,0.1); border-bottom-left-radius: 4px; border: 1px solid var(--glass-border); }
