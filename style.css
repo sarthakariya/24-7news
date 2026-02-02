@@ -2,140 +2,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #000; height: 100vh; overflow: hidden; }
 
-body {
-    background-color: #f5f5f5;
-    height: 100vh;
-    overflow: hidden;
-    font-family: 'Times New Roman', serif;
-}
+/* === DECOY: OXFORD STYLE (Small & Dense) === */
+#decoy-view { background: #e0e0e0; height: 100%; overflow-y: auto; padding: 10px; font-family: 'Times New Roman', serif; }
+.paper-container { background: #fff; max-width: 800px; margin: 0 auto; padding: 40px; color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 
-/* === DECOY: JOURNAL STYLE === */
-#decoy-view {
-    height: 100%;
-    overflow-y: scroll;
-    background: #e0e0e0;
-    padding: 10px;
-}
-
-.paper-container {
-    background: #fff;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    color: #000;
-}
-
-/* Header */
-.journal-header { border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
-.journal-name { font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.journal-header { border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+.journal-name { font-weight: bold; font-size: 14px; letter-spacing: 1px; }
 .journal-date { font-size: 12px; }
 
-.paper-title h1 { font-size: 18px; text-align: center; margin-bottom: 15px; line-height: 1.3; }
+.paper-title h1 { font-size: 16px; text-align: center; margin-bottom: 10px; line-height: 1.3; }
+.authors { text-align: center; font-size: 10px; margin-bottom: 20px; }
+.affiliation { font-style: italic; color: #444; }
 
-.authors { text-align: center; font-size: 11px; margin-bottom: 30px; }
-.affiliation { font-style: italic; color: #444; margin-top: 5px; }
-.received-date { font-size: 10px; color: #666; margin-top: 5px; }
-
-/* Abstract */
-.abstract-section { 
-    margin: 0 40px 30px 40px; 
-    font-size: 11px; 
-    text-align: justify; 
-    line-height: 1.4;
-}
-
-/* Content Columns */
+.abstract-section { margin: 0 30px 20px 30px; font-size: 10px; text-align: justify; line-height: 1.4; }
 .columns { display: flex; flex-wrap: wrap; gap: 20px; }
-.col { flex: 1; min-width: 300px; }
+.col { flex: 1; min-width: 250px; }
 
-h3 { 
-    font-size: 10px; 
-    font-weight: bold; 
-    text-align: center; 
-    margin: 20px 0 10px 0; 
-    letter-spacing: 1px; 
-}
+h3 { font-size: 10px; text-align: center; margin: 15px 0 5px 0; letter-spacing: 1px; }
+p { font-size: 10px; line-height: 1.5; text-align: justify; margin-bottom: 8px; }
+.equation { text-align: center; font-size: 11px; margin: 10px 0; }
 
-p { 
-    font-size: 10.5px; /* SMALL FONT AS REQUESTED */
-    line-height: 1.5; 
-    text-align: justify; 
-    margin-bottom: 10px; 
-}
+.footer-ref { font-size: 9px; margin-top: 30px; display: flex; justify-content: space-between; border-top: 1px solid #000; padding-top: 5px; }
+.doi-link { cursor: text; transition: color 0.2s; }
+.doi-link:active { color: #000; background: #ffff00; }
 
-.equation { text-align: center; margin: 15px 0; font-size: 12px; }
+/* CSS Figure for Decoy */
+.css-figure { border: 1px solid #ccc; padding: 5px; margin: 10px 0; }
+.fig-box { height: 80px; background: #f9f9f9; position: relative; overflow: hidden; }
+.curve { position: absolute; bottom: 0; width: 100%; height: 30px; background: #ddd; border-radius: 50% 50% 0 0; }
+.caption { font-size: 9px; text-align: center; font-style: italic; margin-top: 4px; }
 
-/* Diagram */
-.css-figure { border: 1px solid #ccc; padding: 10px; margin: 15px 0; }
-.fig-box { height: 100px; background: #f9f9f9; position: relative; border: 1px solid #eee; overflow: hidden; }
-.curve { position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: #ddd; border-top-left-radius: 100%; }
-.vector { position: absolute; height: 1px; background: black; transform-origin: left; }
-.v1 { width: 30px; top: 20px; left: 10px; transform: rotate(5deg); }
-.v2 { width: 40px; top: 40px; left: 10px; transform: rotate(0deg); }
-.v3 { width: 20px; top: 30px; left: 60px; transform: rotate(-10deg); }
-.caption { font-size: 9px; margin-top: 5px; text-align: center; font-style: italic; color: #555; }
-
-/* Footer & Trigger */
-.footer-line { margin-top: 40px; border: none; border-top: 1px solid #000; }
-.footer-ref { font-size: 9px; color: #444; margin-top: 5px; display: flex; justify-content: space-between; }
-
-/* THE SECRET TRIGGER STYLE */
-.doi-link { 
-    cursor: text; 
-    color: #444; 
-    font-family: 'Times New Roman', serif;
-    transition: color 0.2s;
-}
-.doi-link:active { color: #000; background-color: #eef; }
-
-
-/* === CHAT UI (Modern Dark) === */
+/* === CHAT: INSTAGRAM THEME === */
 .hidden { display: none !important; }
 
-#chat-view {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #000;
-    font-family: 'Inter', sans-serif;
-    z-index: 9999;
-}
+#chat-view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; z-index: 9999; }
+.chat-container { display: flex; flex-direction: column; height: 100%; }
 
-.chat-container { display: flex; flex-direction: column; height: 100%; background: #000; }
+/* Header */
+.chat-header { padding: 10px 15px; background: #000; border-bottom: 1px solid #262626; display: flex; justify-content: space-between; align-items: center; color: white; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.avatar-circle img { width: 30px; height: 30px; border-radius: 50%; }
+.header-info h3 { font-size: 16px; font-weight: 600; }
+.status-text { font-size: 12px; color: #a8a8a8; }
+#close-chat { background: none; border: none; color: white; font-size: 20px; }
 
-.chat-header {
-    padding: 15px; background: #161616; border-bottom: 1px solid #333;
-    display: flex; justify-content: space-between; align-items: center; color: white;
-}
-.header-left { display: flex; align-items: center; gap: 10px; }
-.avatar-circle { width: 35px; height: 35px; background: #333; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #0a84ff; }
-.header-info h3 { font-size: 15px; margin: 0; font-weight: 600; }
-.status-text { font-size: 11px; color: #666; }
-#close-chat { background: none; border: none; color: #888; font-size: 18px; }
-
-#messages-list { flex: 1; overflow-y: scroll; padding: 15px; display: flex; flex-direction: column; gap: 4px; }
+/* Messages */
+#messages-list { flex: 1; overflow-y: auto; padding: 20px 15px; display: flex; flex-direction: column; gap: 2px; }
 .date-divider { text-align: center; margin: 15px 0; }
-.date-divider span { color: #555; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+.date-divider span { color: #a8a8a8; font-size: 12px; }
 
-.message { max-width: 75%; padding: 8px 12px; border-radius: 18px; font-size: 14px; color: white; position: relative; display: flex; flex-direction: column; }
-.sent { align-self: flex-end; background: #0a84ff; border-bottom-right-radius: 4px; }
-.received { align-self: flex-start; background: #262626; border-bottom-left-radius: 4px; }
+.message { max-width: 75%; padding: 12px 16px; border-radius: 22px; font-size: 15px; line-height: 1.4; position: relative; margin-bottom: 2px; color: white; word-wrap: break-word; }
+.sent { align-self: flex-end; background: #3797f0; /* Insta Blue */ }
+.received { align-self: flex-start; background: #262626; /* Insta Gray */ }
 
-.msg-text { line-height: 1.4; }
-.msg-meta { font-size: 9px; align-self: flex-end; opacity: 0.7; margin-top: 2px; display: flex; gap: 3px; align-items: center; }
+/* Media Styles */
+.media-content img, .media-content video { max-width: 100%; border-radius: 12px; margin-top: 5px; }
+.audio-player { display: flex; align-items: center; gap: 10px; }
+.reaction-heart { position: absolute; bottom: -10px; right: 0; background: #262626; padding: 2px; border-radius: 50%; font-size: 12px; border: 2px solid #000; }
 
-/* Input */
-.input-area { padding: 10px; background: #161616; display: flex; align-items: center; gap: 10px; border-top: 1px solid #333; }
-.input-area input { flex: 1; background: #2c2c2e; border: none; padding: 10px 15px; border-radius: 20px; color: white; outline: none; font-size: 14px; }
-.input-area button { background: none; border: none; color: #0a84ff; font-size: 20px; padding: 5px; }
+/* Input Area */
+.input-area { padding: 10px; background: #000; display: flex; align-items: center; gap: 15px; }
+.text-input-wrapper { flex: 1; background: #262626; border-radius: 22px; padding: 10px 20px; display: flex; align-items: center; }
+.text-input-wrapper input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 15px; }
+.icon-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
+.recording { color: #ff3b30 !important; animation: pulse 1s infinite; }
 
-/* Overlay */
-.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 100; }
-.login-box { background: #1c1c1e; padding: 30px; border-radius: 12px; text-align: center; width: 80%; max-width: 280px; color: white; }
-.lock-icon { font-size: 30px; color: #0a84ff; margin-bottom: 15px; }
-.login-box input { width: 100%; padding: 12px; background: #2c2c2e; border: none; border-radius: 8px; color: white; margin: 15px 0; text-align: center; }
-.login-box button { width: 100%; padding: 10px; background: #0a84ff; border: none; border-radius: 8px; color: white; font-weight: 600; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-/* Stickers */
-#sticker-panel { height: 50px; background: #222; display: flex; align-items: center; padding: 0 10px; gap: 15px; overflow-x: scroll; }
-.sticker { font-size: 22px; cursor: pointer; }
+/* Login Overlay */
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 100; }
+.login-box { text-align: center; width: 80%; max-width: 300px; }
+.lock-icon { font-size: 50px; color: white; margin-bottom: 20px; }
+.login-box input { width: 100%; padding: 12px; background: #262626; border: 1px solid #363636; border-radius: 5px; color: white; margin-bottom: 15px; }
+.login-box button { width: 100%; padding: 10px; background: #3797f0; border: none; border-radius: 5px; color: white; font-weight: 600; }
