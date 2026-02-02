@@ -10,7 +10,6 @@ const firebaseConfig = {
   measurementId: "G-0MFZ1FGZPR"
 };
 
-// Initialize
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
@@ -18,26 +17,26 @@ const db = firebase.database();
 const trigger = document.getElementById('secret-trigger');
 const decoy = document.getElementById('decoy-view');
 const chat = document.getElementById('chat-view');
-const loginOverlay = document.getElementById('login-overlay');
 const msgList = document.getElementById('messages-list');
 const msgInput = document.getElementById('msg-input');
-const stickerPanel = document.getElementById('sticker-panel');
+const mediaInput = document.getElementById('media-input');
+const micBtn = document.getElementById('mic-btn');
+const sendBtn = document.getElementById('send-btn');
 
 let username = localStorage.getItem('chat_username') || '';
 let pressTimer;
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
 
-// === 3. STEALTH TRIGGER ===
+// === 3. TRIGGER LOGIC ===
 const unlockChat = () => {
     decoy.classList.add('hidden');
     chat.classList.remove('hidden');
-    if(username) loginOverlay.classList.add('hidden');
+    if(username) document.getElementById('login-overlay').classList.add('hidden');
 };
 
-// Handle Long Press
-const startPress = (e) => {
-    // Optional: e.preventDefault() if text selection bothers you
-    pressTimer = setTimeout(unlockChat, 2000); 
-};
+const startPress = () => pressTimer = setTimeout(unlockChat, 2000);
 const cancelPress = () => clearTimeout(pressTimer);
 
 trigger.addEventListener('touchstart', startPress);
@@ -50,7 +49,7 @@ document.getElementById('close-chat').addEventListener('click', () => {
     decoy.classList.remove('hidden');
 });
 
-// === 4. CHAT LOGIC ===
+// === 4. CHAT FUNCTIONS ===
 
 // Login
 document.getElementById('join-btn').addEventListener('click', () => {
@@ -58,68 +57,130 @@ document.getElementById('join-btn').addEventListener('click', () => {
     if(name) {
         username = name;
         localStorage.setItem('chat_username', username);
-        loginOverlay.classList.add('hidden');
+        document.getElementById('login-overlay').classList.add('hidden');
     }
 });
 
-// Send Function
+// Toggle Send/Mic Button based on input
+msgInput.addEventListener('input', () => {
+    if(msgInput.value.trim().length > 0) {
+        micBtn.classList.add('hidden');
+        sendBtn.classList.remove('hidden');
+    } else {
+        micBtn.classList.remove('hidden');
+        sendBtn.classList.add('hidden');
+    }
+});
+
+// SEND TEXT
 const sendMessage = (content, type = 'text') => {
     if(!username) return;
-    
-    const now = new Date();
-    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
     db.ref('messages').push({
         user: username,
         content: content,
-        type: type,
-        time: timeString,
-        timestamp: firebase.database.ServerValue.TIMESTAMP
+        type: type, // 'text', 'image', 'video', 'audio'
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        likes: false
     });
     msgInput.value = '';
-    stickerPanel.classList.add('hidden');
+    micBtn.classList.remove('hidden');
+    sendBtn.classList.add('hidden');
 };
 
-document.getElementById('send-btn').addEventListener('click', () => {
-    const text = msgInput.value.trim();
-    if(text) sendMessage(text, 'text');
-});
+sendBtn.addEventListener('click', () => sendMessage(msgInput.value.trim()));
 
-msgInput.addEventListener('keypress', (e) => { 
-    if(e.key === 'Enter') {
-        const text = msgInput.value.trim();
-        if(text) sendMessage(text, 'text');
+// SEND MEDIA (Photo/Video)
+document.getElementById('media-btn').addEventListener('click', () => mediaInput.click());
+
+mediaInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        // Warning for large files
+        if(file.size > 1000000) { // 1MB limit for smooth performance
+            alert("File too large. Please send smaller images/videos.");
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const type = file.type.startsWith('image') ? 'image' : 'video';
+            sendMessage(event.target.result, type);
+        };
+        reader.readAsDataURL(file);
     }
 });
 
-// Sticker Toggle
-document.getElementById('sticker-btn').addEventListener('click', () => {
-    stickerPanel.classList.toggle('hidden');
-});
-window.sendSticker = (emoji) => sendMessage(emoji, 'sticker');
+// RECORD AUDIO
+micBtn.addEventListener('click', async () => {
+    if (!isRecording) {
+        // Start Recording
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            isRecording = true;
+            micBtn.classList.add('recording');
+            audioChunks = [];
 
-// === 5. RECEIVE MESSAGES ===
+            mediaRecorder.addEventListener("dataavailable", event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener("stop", () => {
+                const audioBlob = new Blob(audioChunks);
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+                reader.onloadend = () => {
+                   sendMessage(reader.result, 'audio');
+                };
+            });
+        } catch(err) { alert("Microphone access denied"); }
+    } else {
+        // Stop Recording
+        mediaRecorder.stop();
+        isRecording = false;
+        micBtn.classList.remove('recording');
+    }
+});
+
+// === 5. DISPLAY MESSAGES & REACTIONS ===
 db.ref('messages').limitToLast(50).on('child_added', (snapshot) => {
     const data = snapshot.val();
+    const key = snapshot.key;
     const isMe = data.user === username;
     
     const div = document.createElement('div');
     div.className = `message ${isMe ? 'sent' : 'received'}`;
-    
-    let contentHtml = data.type === 'sticker' 
-        ? `<div style="font-size: 30px;">${data.content}</div>` 
-        : `<span class="msg-text">${data.content}</span>`;
+    div.id = key;
 
-    const ticks = isMe ? '<i class="fas fa-check-double" style="color: #64d2ff;"></i>' : '';
+    // Double Tap to Like
+    div.addEventListener('dblclick', () => {
+        db.ref(`messages/${key}/likes`).set(!data.likes);
+    });
 
-    div.innerHTML = `
-        ${contentHtml}
-        <div class="msg-meta">
-            <span>${data.time}</span>
-            ${ticks}
-        </div>
-    `;
-    
+    let contentHtml = '';
+    if(data.type === 'text') contentHtml = data.content;
+    else if(data.type === 'image') contentHtml = `<div class="media-content"><img src="${data.content}"></div>`;
+    else if(data.type === 'video') contentHtml = `<div class="media-content"><video src="${data.content}" controls></video></div>`;
+    else if(data.type === 'audio') contentHtml = `<div class="audio-player"><audio src="${data.content}" controls></audio></div>`;
+
+    // Heart Logic
+    const heartHtml = data.likes ? `<div class="reaction-heart">❤️</div>` : '';
+
+    div.innerHTML = `${contentHtml}${heartHtml}`;
     msgList.appendChild(div);
-    msgList.scrollTo({ top: msgList.scrollHeight, behavior: 'smooth' });
+    msgList.scrollTo(0, msgList.scrollHeight);
+});
+
+// Listen for Like Updates
+db.ref('messages').limitToLast(50).on('child_changed', (snapshot) => {
+    const data = snapshot.val();
+    const div = document.getElementById(snapshot.key);
+    if(div) {
+        const existingHeart = div.querySelector('.reaction-heart');
+        if(data.likes && !existingHeart) {
+            div.insertAdjacentHTML('beforeend', `<div class="reaction-heart">❤️</div>`);
+        } else if(!data.likes && existingHeart) {
+            existingHeart.remove();
+        }
+    }
 });
