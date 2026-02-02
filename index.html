@@ -25,40 +25,24 @@
             <div class="authors">
                 <p><strong>A. J. Whitman, R. K. Singh, and E. Schrodinger</strong></p>
                 <p class="affiliation">Department of Physics, University of Oxford, OX1 3PU, United Kingdom</p>
-                <p class="received-date">(Received 12 November 2025; published 3 February 2026)</p>
             </div>
 
             <div class="abstract-section">
                 <p><strong>ABSTRACT</strong></p>
-                <p>
-                    We present a numerical study of turbulent boundary layer separation over a curved surface using the Lattice Boltzmann Method (LBM). 
-                    Unlike traditional Navier-Stokes solvers, LBM provides a mesoscopic description of fluid dynamics. 
-                    The simulation results indicate that at $Re > 10^6$, the adverse pressure gradient induces a separation bubble.
-                </p>
+                <p>We present a numerical study of turbulent boundary layer separation over a curved surface using the Lattice Boltzmann Method (LBM). The simulation results indicate that at $Re > 10^6$, the adverse pressure gradient induces a separation bubble.</p>
             </div>
 
             <div class="columns">
                 <div class="col">
                     <h3>I. INTRODUCTION</h3>
-                    <p>
-                        The control of flow separation is of paramount importance in aerodynamic design. 
-                        Prandtl's boundary layer theory simplifies the momentum equation to:
-                    </p>
-                    <div class="equation">
-                        $$ u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y} = -\frac{1}{\rho}\frac{dP}{dx} + \nu \frac{\partial^2 u}{\partial y^2} $$
-                    </div>
-                    <p>
-                        When $\frac{dP}{dx} > 0$ (adverse pressure gradient), the fluid particles decelerate, leading to separation [2].
-                    </p>
+                    <p>The control of flow separation is of paramount importance in aerodynamic design. Prandtl's boundary layer theory simplifies the momentum equation to:</p>
+                    <div class="equation">$$ u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y} = -\frac{1}{\rho}\frac{dP}{dx} + \nu \frac{\partial^2 u}{\partial y^2} $$</div>
                 </div>
                 <div class="col">
                     <h3>II. RESULTS</h3>
-                    <p>Figure 1 depicts the velocity contours at $\alpha = 15^\circ$. The separation point moves upstream as Reynolds number increases.</p>
+                    <p>Figure 1 depicts the velocity contours at $\alpha = 15^\circ$.</p>
                     <div class="css-figure">
-                        <div class="fig-box">
-                            <div class="curve"></div>
-                            <div class="vector v1"></div><div class="vector v2"></div>
-                        </div>
+                        <div class="fig-box"><div class="curve"></div></div>
                         <p class="caption">FIG 1. Vector field visualization.</p>
                     </div>
                 </div>
@@ -74,42 +58,42 @@
     </div>
 
     <div id="chat-view" class="hidden">
-        <div class="chat-container">
+        <div class="liquid-bg">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+        </div>
+
+        <div class="chat-container glass-panel">
             <div class="chat-header">
-                <div class="header-left">
-                    <div class="avatar-circle"><img src="https://ui-avatars.com/api/?name=User&background=random" alt=""></div>
-                    <div class="header-info">
-                        <h3 id="chat-title">Direct Message</h3>
-                        <span class="status-text">Active now</span>
-                    </div>
+                <div class="header-title">
+                    <h3 id="chat-title">Private Chat</h3>
+                    <span class="status-dot"></span>
                 </div>
                 <button id="close-chat"><i class="fas fa-times"></i></button>
             </div>
 
-            <div id="login-overlay" class="overlay">
+            <div id="login-overlay" class="glass-overlay">
                 <div class="login-box">
-                    <i class="fab fa-instagram lock-icon"></i>
-                    <h3>Login</h3>
-                    <input type="text" id="username-input" placeholder="Username" autocomplete="off">
-                    <button id="join-btn">Log In</button>
+                    <h3>Identify</h3>
+                    <input type="text" id="username-input" placeholder="Your Name" autocomplete="off">
+                    <button id="join-btn">Enter</button>
                 </div>
             </div>
 
             <div id="messages-list">
-                <div class="date-divider"><span>Today</span></div>
-            </div>
+                </div>
 
             <div class="input-area">
                 <input type="file" id="media-input" accept="image/*,video/*" style="display: none;">
-                
                 <button class="icon-btn" id="media-btn"><i class="far fa-image"></i></button>
                 
                 <div class="text-input-wrapper">
-                    <input type="text" id="msg-input" placeholder="Message..." autocomplete="off">
+                    <input type="text" id="msg-input" placeholder="Type a message..." autocomplete="off">
                 </div>
 
                 <button class="icon-btn" id="mic-btn"><i class="fas fa-microphone"></i></button>
-                <button class="icon-btn hidden" id="send-btn" style="color: #3797f0;"><i class="fas fa-paper-plane"></i></button>
+                <button class="icon-btn hidden" id="send-btn"><i class="fas fa-heart"></i></button>
             </div>
         </div>
     </div>
